@@ -1,0 +1,30 @@
+The first step in parsing is determining whether we are reading in ARM assembly or hex code. This ought to be easy enough, since we can just look at the first line of the input file and see if it is hex or not.
+Once that is done, we move on to the actual parsing itself. We will start by examining the structure of a binary ARM machine code instruction. This, unfortunately, is easier said than done, since the bits for each flag do not always remain consistent.
+For example, a conditional branch instruction only makes use of the first bit of the opcode section, which determines whether to branch with a link (whatever that means):
+	[4-bit condition] 101 L [24-bit offset (how far to jump ahead)]
+	CCCC			  101 L OOOO OOOO OOOO OOOO OOOO OOOO
+However, a software interrupt instruction looks like this:
+	[4-bit condition] 1111 [24-bit software interrupt number]
+	CCCC			  1111  OOOO OOOO OOOO OOOO OOOO OOOO
+As you can see, these instructions potentially differ by only a single bit, but have vastly different meanings. Caution and specificity are therefore vital when converting ARM assembly to machine code or vice versa.
+The good news is that we do not have to worry about most of the ARM instructions for the base project, meaning that we can potentially parse all the necessary instructions with only a few if statements. The ARM instructions we must include are as follows:
+	Data manipulation - [4-bit condition code] 00 [1-bit flag for immediate or register form of instruction] [4-bit opcode] [1-bit flag to signify whether instruction updates condition codes] [4-bit flag to specify first source register] [4-bit flag to specify destination register] [12-bit flag to specify second source operand]
+		ADD - CCCC 00 I 0000 S RRRR DDDD ssss ssss ssss
+		EOR - CCCC 00 I 0001 S RRRR DDDD ssss ssss ssss
+		SUB - CCCC 00 I 0010 S RRRR DDDD ssss ssss ssss
+		...and so forth. Branching has been outlined above and loading/storing is somewhat complex, so please see the linked document for more detailed info as to the structure of those instructions.
+
+The process for going from ARM assembly to machine code is therefore a matter of:
+	1. Determining the correct instruction (ADD, MUL, etc.) and selecting the appropriate template, then
+	2. Filling in the correct values at the proper locations.
+For example, say we read in the instruction "ADD r0,r2,r2", which means "Add r2 to r0 and store it in r2." We would begin by selecting the data processing template (brackets denote what has changed):
+	1. [CCCC 00 I OOOO S RRRR DDDD ssss ssss ssss]
+We then insert the ADD opcode into the appropriate location:
+	2. CCCC 00 I [0000] S RRRR DDDD ssss ssss ssss
+Finally, we insert r0, r2, and r2 into the instruction:
+	3. CCCC 00 I 0000 S [0000] [0010] [0000 0000 0010 - I think that's right, anyway]
+
+
+
+APPENDIX
+	This document is quite helpful: https://cs107e.github.io/readings/armisa.pdf
