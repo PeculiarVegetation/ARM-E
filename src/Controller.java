@@ -4,15 +4,6 @@ public class Controller
 {
     private boolean debug_mode;
 
-//    private enum Operation
-//    {
-//        ADD, SUB, LDR, STR
-//    }
-//
-//    private static final int PC = 13;
-//    private static final int SP = 14;
-//    private static final int LR = 15;
-
     private CPU cpu;
     private Memory mem;
     private int addr_to_write;
@@ -54,9 +45,21 @@ public class Controller
         }
     }
 
-    public void tick()
+    public void tick() throws Exception
     {
+        if(this.mem.read(this.cpu.getRegister(Utils.PC)).instruction == false)  //If current PC location doesn't point to an instruction...
+        {
+            throw new Exception("Error: memory address at " + this.cpu.getRegister(Utils.PC) + " does not contain an instruction");  //...cry about it
+        }
 
+        try
+        {
+            parseInstruction(this.mem.read(this.cpu.getRegister(Utils.PC)).operation);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
     }
 
     public void parseInstruction(String instruction) throws Exception
@@ -110,7 +113,7 @@ public class Controller
             int destination = 0, arg1 = 0, arg2 = 0;
 
             //Parse destination
-            if(command[1].charAt(0) != 'r')  //if not storing to register, fail automatically
+            if(command[1].toLowerCase().charAt(0) != 'r')  //if not storing to register, fail automatically
             {
                 throw new Exception("Error: must store result to a register");
             }
@@ -138,7 +141,7 @@ public class Controller
             Utils.printIf("Destination register: " + destination + "\n", debug_mode);
 
             //Parse arg1
-            if(command[2].charAt(0) == 'r')  //register
+            if(command[2].toLowerCase().charAt(0) == 'r')  //register
             {
                 if(command[2].length() < 2)  //if no number after r, fail
                 {
@@ -224,7 +227,7 @@ public class Controller
             }
 
             //Parse arg2
-            if(command[3].charAt(0) == 'r')  //register
+            if(command[3].toLowerCase().charAt(0) == 'r')  //register
             {
                 if(command[3].length() < 2)  //if no number after r, fail
                 {
@@ -309,7 +312,7 @@ public class Controller
                 }
             }
 
-            Utils.printIf("arg1 + arg2 = " + (arg1 + arg2) + "\n", debug_mode);
+            Utils.printIf("arg1 + arg2 = " + arg1 + " + " + arg2 + " = " + (arg1 + arg2) + "\n", debug_mode);
 
             cpu.updateRegister(destination, arg1 + arg2);
 
@@ -324,13 +327,13 @@ public class Controller
             Utils.printIf("SUB operation!\n", debug_mode);
             if(num_args != 4)
             {
-                throw new Exception("Error: incorrect number of arguments for ADD instruction");
+                throw new Exception("Error: incorrect number of arguments for SUB instruction");
             }
 
             int destination = 0, arg1 = 0, arg2 = 0;
 
             //Parse destination
-            if(command[1].charAt(0) != 'r')  //if not storing to register, fail automatically
+            if(command[1].toLowerCase().charAt(0) != 'r')  //if not storing to register, fail automatically
             {
                 throw new Exception("Error: must store result to a register");
             }
@@ -356,7 +359,7 @@ public class Controller
             }
 
             //Parse arg1
-            if(command[2].charAt(0) == 'r')  //register
+            if(command[2].toLowerCase().charAt(0) == 'r')  //register
             {
                 if(command[2].length() < 2)  //if no number after r, fail
                 {
@@ -434,7 +437,7 @@ public class Controller
             }
 
             //Parse arg2
-            if(command[3].charAt(0) == 'r')  //register
+            if(command[3].toLowerCase().charAt(0) == 'r')  //register
             {
                 if(command[3].length() < 2)  //if no number after r, fail
                 {

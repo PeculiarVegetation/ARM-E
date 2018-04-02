@@ -2,10 +2,6 @@ public class CPU
 {
     private Controller controller;
 
-//    private static final int PC = 13;
-//    private static final int SP = 14;
-//    private static final int LR = 15;
-
     private int registers[];
     private int program_counter;
     private int stack_pointer;

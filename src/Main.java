@@ -50,15 +50,6 @@ public class Main {
         Controller controller = new Controller(64);
         controller.setDebug_mode(flag_debug);
 
-        try
-        {
-            controller.parseInstruction("ADD r2,#2, #2");
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-
         boolean exit = false;
 
         //Command loop
@@ -94,7 +85,20 @@ public class Main {
                     flag_verbose = !flag_verbose;
                     break;
                 case "STEP":
-                    System.out.println("Not yet implemented!");
+                    Utils.printIf("Executing instruction at address " + controller.getMem().read(controller.getCPU().getRegister(Utils.PC)).value + "...\n", flag_debug | flag_verbose);
+
+                    try
+                    {
+                        controller.tick();
+                    }
+                    catch(Exception e)
+                    {
+                        Utils.printIf("Error: unable to execute instruction. See stack trace for details:\n", flag_debug);
+                        e.printStackTrace();
+                        break;
+                    }
+
+                    Utils.printIf("Done\n", flag_verbose);
                     break;
                 case "SHOWMEM":
                     if(input_array.length != 2)
@@ -139,8 +143,31 @@ public class Main {
                         System.out.println("Error: incorrect number of arguments");
                         break;
                     }
+
+                    if(Integer.parseInt(input_array[2]) < 0 || Integer.parseInt(input_array[2]) > 15)
+                    {
+                        System.out.println("Error: register must be between 0 and 15");
+                        break;
+                    }
+
                     Utils.printIf("Setting register " + input_array[1] + " to " + input_array[2] + "...\n", flag_verbose);
-                    controller.getCPU().updateRegister(Integer.parseInt(input_array[1]), Integer.parseInt(input_array[2]));
+                    if(input_array[1].toUpperCase().equals("PC"))  //PC
+                    {
+                        controller.getCPU().updateRegister(Utils.PC, Integer.parseInt(input_array[2]));
+                    }
+                    else if(input_array[1].toUpperCase().equals("SP"))  //SP
+                    {
+                        controller.getCPU().updateRegister(Utils.SP, Integer.parseInt(input_array[2]));
+                    }
+                    else if(input_array[1].toUpperCase().equals("LR"))  //LR
+                    {
+                        controller.getCPU().updateRegister(Utils.LR, Integer.parseInt(input_array[2]));
+                    }
+                    else  //number
+                    {
+                        controller.getCPU().updateRegister(Integer.parseInt(input_array[1]), Integer.parseInt(input_array[2]));
+                    }
+
                     Utils.printIf("Done\n", flag_verbose);
                     break;
                 case "SETMEM_VAL":
@@ -154,13 +181,21 @@ public class Main {
                     Utils.printIf("Done\n", flag_verbose);
                     break;
                 case "SETMEM_COM":
-                    if(input_array.length != 3)
+                    if(input_array.length < 3)
                     {
                         System.out.println("Error: incorrect number of arguments");
                         break;
                     }
-                    Utils.printIf("Setting memory address " + input_array[1] + " to command " + input_array[2] + "...\n", flag_verbose);
-                    controller.getMem().writeCommand(Integer.parseInt(input_array[1]), input_array[2]);
+
+                    //This section handles commands with spaces that would have been split up beforehand; for example, ADD r1,r2,r2 would have been split into ADD and r1,r2,r2
+                    String com = "";
+                    for(int i = 2; i < input_array.length; i++)
+                    {
+                        com += input_array[i] + " ";
+                    }
+
+                    Utils.printIf("Setting memory address " + input_array[1] + " to command " + com + "...\n", flag_verbose);
+                    controller.getMem().writeCommand(Integer.parseInt(input_array[1]), com);
                     Utils.printIf("Done\n", flag_verbose);
                     break;
                 case "CLRMEM":
