@@ -12,7 +12,7 @@ public class Main {
     public static boolean flag_verbose = false;
     public static boolean flag_debug = false;
     public static boolean flag_gui = false;
-    public static Dispmode disp_mode = Dispmode.HEX:
+    public static Dispmode disp_mode = Dispmode.HEX;
     public static String file_name;
 
     public static void main(String args[])
@@ -73,9 +73,10 @@ public class Main {
         while(!exit)
         {
             System.out.println("Enter a command:");
+            System.out.println("STATUS                         : show status of all program options");
             System.out.println("DEBUG                          : toggle debug mode");
             System.out.println("VERBOSE                        : toggle verbose mode");
-            System.out.println("DISPMODE <mode>                : change number base display mode to binary, hex, or decimal for registers and memory locations")
+            System.out.println("DISPMODE <mode>                : change number base display mode to binary, hex, or decimal for registers and memory locations");
             System.out.println("STEP <number>                  : step <number> operations through the program");
             System.out.println("SHOWMEM <number>               : display <number> lines of memory, starting from 0");
             System.out.println("SHOWREG                        : display contents of all registers");
@@ -93,6 +94,43 @@ public class Main {
 
             switch(input_array[0])
             {
+                case "STATUS":
+                    if(flag_debug == true)
+                    {
+                        System.out.println("flag_debug   | true");
+                    }
+                    else
+                    {
+                        System.out.println("flag_debug   | false");
+                    }
+
+                    if(flag_verbose == true)
+                    {
+                        System.out.println("flag_verbose | true");
+                    }
+                    else
+                    {
+                        System.out.println("flag_verbose | false");
+                    }
+
+                    if(disp_mode == Dispmode.BINARY)
+                    {
+                        System.out.println("disp_mode    | BINARY");
+                    }
+                    else if (disp_mode == Dispmode.HEX)
+                    {
+                        System.out.println("disp_mode    | HEX");
+                    }
+                    else
+                    {
+                        System.out.println("disp_mode    | DECIMAL");
+                    }
+
+                    Utils.printIf("Done.\n", flag_verbose);
+
+                    System.out.println("Press Enter to continue...");
+                    input.nextLine();
+                    break;
                 case "DEBUG":
                     flag_debug = !flag_debug;
                     break;
@@ -100,8 +138,6 @@ public class Main {
                     flag_verbose = !flag_verbose;
                     break;
                 case "DISPMODE":
-                    System.out.println("Not yet implemented!");
-
                     Utils.printIf("Changing display mode...\n", flag_verbose || flag_debug);
 
                     if(input_array.length != 2)
@@ -297,10 +333,20 @@ public class Main {
             {
                 System.out.printf("0x%3s|   %32s\n", Integer.toHexString(i).toUpperCase(), c.getMem().read(i).operation);
             }
-            //TODO: implement different base system display modes
             else
             {
-                System.out.printf("0x%3s| 0b%32s\n", Integer.toHexString(i).toUpperCase(), Integer.toBinaryString(c.getMem().read(i).value).toUpperCase());
+                if(disp_mode == Dispmode.BINARY)
+                {
+                    System.out.printf("0x%3s| 0b%32s\n", Integer.toHexString(i).toUpperCase(), Integer.toBinaryString(c.getMem().read(i).value).toUpperCase());
+                }
+                else if(disp_mode == Dispmode.HEX)
+                {
+                    System.out.printf("0x%3s| 0x%32s\n", Integer.toHexString(i).toUpperCase(), Integer.toHexString(c.getMem().read(i).value).toUpperCase());
+                }
+                else  //decimal
+                {
+                    System.out.printf("0x%3s|   %32s\n", Integer.toHexString(i).toUpperCase(), Integer.toString(c.getMem().read(i).value).toUpperCase());
+                }
             }
         }
 
@@ -316,19 +362,63 @@ public class Main {
         {
             if (i == Utils.PC)
             {
-                System.out.printf("PC  | 0x%4s\n", Integer.toHexString(c.getCPU().getRegister(i)).toUpperCase());
+                if(disp_mode == Dispmode.BINARY)
+                {
+                    System.out.printf("PC  | 0b%4s\n", Integer.toBinaryString(c.getCPU().getRegister(i)).toUpperCase());
+                }
+                else if(disp_mode == Dispmode.HEX)
+                {
+                    System.out.printf("PC  | 0x%4s\n", Integer.toHexString(c.getCPU().getRegister(i)).toUpperCase());
+                }
+                else
+                {
+                    System.out.printf("PC  |   %4s\n", Integer.toString(c.getCPU().getRegister(i)).toUpperCase());
+                }
             }
             else if (i == Utils.SP)
             {
-                System.out.printf("SP  | 0x%4s\n", Integer.toHexString(c.getCPU().getRegister(i)).toUpperCase());
+                if(disp_mode == Dispmode.BINARY)
+                {
+                    System.out.printf("SP  | 0b%4s\n", Integer.toBinaryString(c.getCPU().getRegister(i)).toUpperCase());
+                }
+                else if(disp_mode == Dispmode.HEX)
+                {
+                    System.out.printf("SP  | 0x%4s\n", Integer.toHexString(c.getCPU().getRegister(i)).toUpperCase());
+                }
+                else
+                {
+                    System.out.printf("SP  |   %4s\n", Integer.toString(c.getCPU().getRegister(i)).toUpperCase());
+                }
             }
             else if (i == Utils.LR)
             {
-                System.out.printf("LR  | 0x%4s\n", Integer.toHexString(c.getCPU().getRegister(i)).toUpperCase());
+                if(disp_mode == Dispmode.BINARY)
+                {
+                    System.out.printf("LR  | 0b%4s\n", Integer.toBinaryString(c.getCPU().getRegister(i)).toUpperCase());
+                }
+                else if(disp_mode == Dispmode.HEX)
+                {
+                    System.out.printf("LR  | 0x%4s\n", Integer.toHexString(c.getCPU().getRegister(i)).toUpperCase());
+                }
+                else
+                {
+                    System.out.printf("LR  |   %4s\n", Integer.toString(c.getCPU().getRegister(i)).toUpperCase());
+                }
             }
             else
             {
-                System.out.printf("r%3d| 0x%4s\n", i, Integer.toHexString(c.getCPU().getRegister(i)).toUpperCase());
+                if(disp_mode == Dispmode.BINARY)
+                {
+                    System.out.printf("r%3d| 0b%4s\n", i, Integer.toBinaryString(c.getCPU().getRegister(i)).toUpperCase());
+                }
+                else if(disp_mode == Dispmode.HEX)
+                {
+                    System.out.printf("r%3d| 0x%4s\n", i, Integer.toHexString(c.getCPU().getRegister(i)).toUpperCase());
+                }
+                else
+                {
+                    System.out.printf("r%3d|   %4s\n", i, Integer.toString(c.getCPU().getRegister(i)).toUpperCase());
+                }
             }
         }
         System.out.println("----------------------------------------");

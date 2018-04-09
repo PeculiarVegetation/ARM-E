@@ -154,63 +154,13 @@ public class Controller
             }
             else if(command[2].charAt(0) == '#')  //literal
             {
-                if(command[2].length() < 2)  //if no number after #, fail
+                try
                 {
-                    throw new Exception("Error: must define a number");
+                    arg1 = parseIntArg(command[2].toLowerCase());
                 }
-
-                if(command[2].toLowerCase().contains("0x"))  //hex
+                catch(Exception e)
                 {
-                    temp = temp.substring(2);
-
-                    if(temp.equals(""))
-                    {
-                        throw new Exception("Error: must define a number!");
-                    }
-
-                    try
-                    {
-                        arg1 = Integer.parseInt(temp, 16);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg1 (from hex): " + arg1 + "\n", debug_mode);
-                }
-                else if(command[2].toLowerCase().contains("0b"))  //binary
-                {
-                    temp = temp.substring(2);
-
-                    if(temp.equals(""))
-                    {
-                        throw new Exception("Error: must define a number!");
-                    }
-
-                    try
-                    {
-                        arg1 = Integer.parseInt(temp, 2);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg1 (from binary): " + arg1 + "\n", debug_mode);
-                }
-                else  //decimal
-                {
-                    try
-                    {
-                        arg1 = Integer.parseInt(temp);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg1 (from decimal): " + arg1 + "\n", debug_mode);
+                    throw e;
                 }
             }
 
@@ -228,63 +178,13 @@ public class Controller
             }
             else if(command[3].charAt(0) == '#')  //literal
             {
-                if(command[3].length() < 2)  //if no number after #, fail
+                try
                 {
-                    throw new Exception("Error: must define a number");
+                    arg2 = parseIntArg(command[3].toLowerCase());
                 }
-
-                if(command[3].toLowerCase().contains("0x"))  //hex
+                catch(Exception e)
                 {
-                    temp = temp.substring(2);
-
-                    if(temp.equals(""))
-                    {
-                        throw new Exception("Error: must define a number!");
-                    }
-
-                    try
-                    {
-                        arg2 = Integer.parseInt(temp, 16);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg2 (from hex): " + arg1 + "\n", debug_mode);
-                }
-                else if(command[3].toLowerCase().contains("0b"))  //binary
-                {
-                    temp = temp.substring(2);
-
-                    if(temp.equals(""))
-                    {
-                        throw new Exception("Error: must define a number!");
-                    }
-
-                    try
-                    {
-                        arg2 = Integer.parseInt(temp, 2);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg2 (from binary): " + arg1 + "\n", debug_mode);
-                }
-                else  //decimal
-                {
-                    try
-                    {
-                        arg2 = Integer.parseInt(temp);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg2 (from decimal): " + arg1 + "\n", debug_mode);
+                    throw e;
                 }
             }
 
@@ -350,63 +250,13 @@ public class Controller
             }
             else if(command[2].charAt(0) == '#')  //literal
             {
-                if(command[2].length() < 2)  //if no number after #, fail
+                try
                 {
-                    throw new Exception("Error: must define a number");
+                    arg1 = parseIntArg(command[2].toLowerCase());
                 }
-
-                if(command[2].toLowerCase().contains("0x"))  //hex
+                catch(Exception e)
                 {
-                    temp = temp.substring(2);
-
-                    if(temp.equals(""))
-                    {
-                        throw new Exception("Error: must define a number!");
-                    }
-
-                    try
-                    {
-                        arg1 = Integer.parseInt(temp, 16);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg1 (from hex): " + arg1 + "\n", debug_mode);
-                }
-                else if(command[2].toLowerCase().contains("0b"))  //binary
-                {
-                    temp = temp.substring(2);
-
-                    if(temp.equals(""))
-                    {
-                        throw new Exception("Error: must define a number!");
-                    }
-
-                    try
-                    {
-                        arg1 = Integer.parseInt(temp, 2);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg1 (from binary): " + arg1 + "\n", debug_mode);
-                }
-                else  //decimal
-                {
-                    try
-                    {
-                        arg1 = Integer.parseInt(temp);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg1 (from decimal): " + arg1 + "\n", debug_mode);
+                    throw e;
                 }
             }
 
@@ -424,63 +274,13 @@ public class Controller
             }
             else if(command[3].charAt(0) == '#')  //literal
             {
-                if(command[3].length() < 2)  //if no number after #, fail
+                try
                 {
-                    throw new Exception("Error: must define a number");
+                    arg2 = parseIntArg(command[3].toLowerCase());
                 }
-
-                if(command[3].toLowerCase().contains("0x"))  //hex
+                catch(Exception e)
                 {
-                    temp = temp.substring(2);
-
-                    if(temp.equals(""))
-                    {
-                        throw new Exception("Error: must define a number!");
-                    }
-
-                    try
-                    {
-                        arg2 = Integer.parseInt(temp, 16);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg2 (from hex): " + arg1 + "\n", debug_mode);
-                }
-                else if(command[3].toLowerCase().contains("0b"))  //binary
-                {
-                    temp = temp.substring(2);
-
-                    if(temp.equals(""))
-                    {
-                        throw new Exception("Error: must define a number!");
-                    }
-
-                    try
-                    {
-                        arg2 = Integer.parseInt(temp, 2);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg2 (from binary): " + arg1 + "\n", debug_mode);
-                }
-                else  //decimal
-                {
-                    try
-                    {
-                        arg2 = Integer.parseInt(temp);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                    Utils.printIf("arg2 (from decimal): " + arg1 + "\n", debug_mode);
+                    throw e;
                 }
             }
 
@@ -547,9 +347,72 @@ public class Controller
     {
         int result = 0;
 
-        throw new Exception("Error: not yet implemented!");
+        if(arg_string.charAt(0) != '#')
+        {
+            throw new Exception("Error: must be a number");
+        }
 
-        //return(result);
+        if(arg_string.length() < 2)
+        {
+            throw new Exception("Error: must define a number");
+        }
+
+        arg_string = arg_string.substring(1);
+
+        if(arg_string.toLowerCase().contains("0x"))  //hex
+        {
+            arg_string = arg_string.substring(2);
+
+            if (arg_string.equals(""))
+            {
+                throw new Exception("Error: must define a number!");
+            }
+
+            try
+            {
+                result = Integer.parseInt(arg_string, 16);
+            } catch (Exception e)
+            {
+                throw e;
+            }
+
+            Utils.printIf("result (from hex): " + result + "\n", debug_mode);
+        }
+        else if(arg_string.toLowerCase().contains("0b"))
+        {
+            arg_string = arg_string.substring(2);
+
+            if(arg_string.equals(""))
+            {
+                throw new Exception("Error: must define a number!");
+            }
+
+            try
+            {
+                result = Integer.parseInt(arg_string, 2);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+
+            Utils.printIf("result (from binary): " + result + "\n", debug_mode);
+        }
+        else
+        {
+            try
+            {
+                result = Integer.parseInt(arg_string);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+
+            Utils.printIf("result (from decimal): " + result + "\n", debug_mode);
+        }
+
+        return(result);
     }
 
     //Returns contents of address contained in register
