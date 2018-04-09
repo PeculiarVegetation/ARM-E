@@ -143,26 +143,14 @@ public class Controller
             //Parse arg1
             if(command[2].toLowerCase().charAt(0) == 'r')  //register
             {
-                if(command[2].length() < 2)  //if no number after r, fail
-                {
-                    throw new Exception("Error: must define a register to lead number from");
-                }
-
                 try
                 {
-                    arg1 = Integer.parseInt(temp);
+                    arg1 = parseRegArg(command[2]);
                 }
                 catch(Exception e)
                 {
                     throw e;
                 }
-
-                if(arg1 < 0 || arg1 > 15)
-                {
-                    throw new Exception("Error: register must be between 0 and 15");
-                }
-
-                Utils.printIf("arg1 register: " + arg1 + "\n", debug_mode);
             }
             else if(command[2].charAt(0) == '#')  //literal
             {
@@ -229,26 +217,14 @@ public class Controller
             //Parse arg2
             if(command[3].toLowerCase().charAt(0) == 'r')  //register
             {
-                if(command[3].length() < 2)  //if no number after r, fail
-                {
-                    throw new Exception("Error: must define a register to lead number from");
-                }
-
                 try
                 {
-                    arg2 = Integer.parseInt(temp);
+                    arg2 = parseRegArg(command[3]);
                 }
                 catch(Exception e)
                 {
                     throw e;
                 }
-
-                if(arg2 < 0 || arg2 > 15)
-                {
-                    throw new Exception("Error: register must be between 0 and 15");
-                }
-
-                Utils.printIf("arg2 register: " + arg2 + "\n", debug_mode);
             }
             else if(command[3].charAt(0) == '#')  //literal
             {
@@ -358,26 +334,18 @@ public class Controller
                 throw new Exception("Error: register must be between 0 and 15");
             }
 
+            Utils.printIf("Destination register: " + destination + "\n", debug_mode);
+
             //Parse arg1
             if(command[2].toLowerCase().charAt(0) == 'r')  //register
             {
-                if(command[2].length() < 2)  //if no number after r, fail
-                {
-                    throw new Exception("Error: must define a register to lead number from");
-                }
-
                 try
                 {
-                    arg1 = Integer.parseInt(temp);
+                    arg1 = parseRegArg(command[2]);
                 }
                 catch(Exception e)
                 {
                     throw e;
-                }
-
-                if(arg1 < 0 || arg1 > 15)
-                {
-                    throw new Exception("Error: register must be between 0 and 15");
                 }
             }
             else if(command[2].charAt(0) == '#')  //literal
@@ -404,6 +372,8 @@ public class Controller
                     {
                         throw e;
                     }
+
+                    Utils.printIf("arg1 (from hex): " + arg1 + "\n", debug_mode);
                 }
                 else if(command[2].toLowerCase().contains("0b"))  //binary
                 {
@@ -422,6 +392,8 @@ public class Controller
                     {
                         throw e;
                     }
+
+                    Utils.printIf("arg1 (from binary): " + arg1 + "\n", debug_mode);
                 }
                 else  //decimal
                 {
@@ -433,29 +405,21 @@ public class Controller
                     {
                         throw e;
                     }
+
+                    Utils.printIf("arg1 (from decimal): " + arg1 + "\n", debug_mode);
                 }
             }
 
             //Parse arg2
             if(command[3].toLowerCase().charAt(0) == 'r')  //register
             {
-                if(command[3].length() < 2)  //if no number after r, fail
-                {
-                    throw new Exception("Error: must define a register to lead number from");
-                }
-
                 try
                 {
-                    arg2 = Integer.parseInt(temp);
+                    arg2 = parseRegArg(command[3]);
                 }
                 catch(Exception e)
                 {
                     throw e;
-                }
-
-                if(arg2 < 0 || arg2 > 15)
-                {
-                    throw new Exception("Error: register must be between 0 and 15");
                 }
             }
             else if(command[3].charAt(0) == '#')  //literal
@@ -482,6 +446,8 @@ public class Controller
                     {
                         throw e;
                     }
+
+                    Utils.printIf("arg2 (from hex): " + arg1 + "\n", debug_mode);
                 }
                 else if(command[3].toLowerCase().contains("0b"))  //binary
                 {
@@ -500,6 +466,8 @@ public class Controller
                     {
                         throw e;
                     }
+
+                    Utils.printIf("arg2 (from binary): " + arg1 + "\n", debug_mode);
                 }
                 else  //decimal
                 {
@@ -511,10 +479,17 @@ public class Controller
                     {
                         throw e;
                     }
+
+                    Utils.printIf("arg2 (from decimal): " + arg1 + "\n", debug_mode);
                 }
             }
 
+            Utils.printIf("arg1 - arg2 = " + arg1 + " - " + arg2 + " = " + (arg1 - arg2) + "\n", debug_mode);
+
+
             cpu.updateRegister(destination, arg1 - arg2);
+
+            Utils.printIf("Destination has " + cpu.getRegister(destination) + " after operation completion\n", debug_mode);
             if(destination != Utils.PC)
             {
                 cpu.updateRegister(Utils.PC, cpu.getRegister(Utils.PC) + 1);
@@ -530,6 +505,8 @@ public class Controller
                 throw new Exception("Error: incorrect number of arguments for LDR operation");
             }
 
+
+
             int destination = 0, arg1 = 0;
 
         }
@@ -541,6 +518,8 @@ public class Controller
             {
                 throw new Exception("Error: incorrect number of arguments for STR operation");
             }
+
+
 
             int destination = 0, arg1 = 0;
 
@@ -563,7 +542,88 @@ public class Controller
         this.addr_to_write = addr;
     }
 
+    //Returns parsed integer
+    private int parseIntArg(String arg_string) throws Exception
+    {
+        int result = 0;
 
+        throw new Exception("Error: not yet implemented!");
+
+        //return(result);
+    }
+
+    //Returns contents of address contained in register
+    private int parseAddrArg(String arg_string) throws Exception
+    {
+        int result;
+
+        if (arg_string.charAt(0) != '[' || arg_string.charAt(arg_string.length() - 1) != ']')
+        {
+            throw new Exception("Error: must be enclosed in []");
+        }
+
+        if(arg_string.length() < 3 || arg_string.length() > 4)
+        {
+            throw new Exception("Error: must define a register to obtain address from");
+        }
+
+        arg_string = arg_string.substring(1, arg_string.length() - 2);
+
+        try
+        {
+            result = Integer.parseInt(arg_string);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+
+        if(result < 0 || result > 15)
+        {
+            throw new Exception("Error: register must be between 0 and 15");
+        }
+
+        result = this.mem.read(this.cpu.getRegister(result)).value;
+
+        return(result);
+    }
+
+    //Returns contents of register
+    private int parseRegArg(String arg_string) throws Exception
+    {
+        int result;
+        arg_string = arg_string.toLowerCase();  //Prevents problems later
+
+        if(arg_string.charAt(0) != 'r')
+        {
+            throw new Exception("Error: must be a register");
+        }
+
+        if(arg_string.length() < 2 || arg_string.length() > 3)
+        {
+            throw new Exception("Error: must define a register to modify");
+        }
+
+        arg_string = arg_string.substring(1);  //set arg_string to everything after r
+
+        try
+        {
+            result = Integer.parseInt(arg_string);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+
+        if(result < 0 || result > 15)
+        {
+            throw new Exception("Error: register must be between 0 and 15");
+        }
+
+        result = this.cpu.getRegister(result);
+
+        return(result);
+    }
 
 
 }

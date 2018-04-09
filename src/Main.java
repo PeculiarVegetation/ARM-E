@@ -5,16 +5,22 @@ import java.util.Scanner;
 
 public class Main {
 
+    enum Dispmode {
+        BINARY, HEX, DECIMAL
+    }
+
     public static boolean flag_verbose = false;
     public static boolean flag_debug = false;
+    public static boolean flag_gui = false;
+    public static Dispmode disp_mode = Dispmode.HEX:
     public static String file_name;
 
     public static void main(String args[])
     {
         if (args.length == 0)
         {
-            System.out.println("No args found, running in GUI");
-            //no args, run as GUI
+            System.out.println("No args found");
+            //no args, run as CLI
         }
         else
         {
@@ -29,11 +35,15 @@ public class Main {
                     {
                         case "-v":  //verbose mode
                             flag_verbose = true;
-                            System.out.println("Running in verbose mode..");
+                            System.out.println("Running in verbose mode...");
                             break;
                         case "-d":  //debugging mode
                             flag_debug = true;
-                            System.out.println("Running in debug mode..");
+                            System.out.println("Running in debug mode...");
+                            break;
+                        case "-g":  //GUI mode
+                            flag_gui = true;
+                            System.out.println("Running in GUI mode... (not yet implemented!)");
                             break;
                         default:  //I got nothing
                             System.out.printf("Error: unrecognized flag %s\n", s);
@@ -42,11 +52,15 @@ public class Main {
                 }
                 else  //assume file if not flag
                 {
+                    System.out.printf("Loading file %s...\n", s);
                     file_name = s;
                     break;  //ensure we read nothing after the file, to prevent reading too many files
                 }
             }
         }
+
+        Utils.printIf("Running in CLI mode...\n", !flag_gui);
+
         Controller controller = new Controller(64);
         controller.setDebug_mode(flag_debug);
 
@@ -61,6 +75,7 @@ public class Main {
             System.out.println("Enter a command:");
             System.out.println("DEBUG                          : toggle debug mode");
             System.out.println("VERBOSE                        : toggle verbose mode");
+            System.out.println("DISPMODE <mode>                : change number base display mode to binary, hex, or decimal for registers and memory locations")
             System.out.println("STEP <number>                  : step <number> operations through the program");
             System.out.println("SHOWMEM <number>               : display <number> lines of memory, starting from 0");
             System.out.println("SHOWREG                        : display contents of all registers");
@@ -83,6 +98,39 @@ public class Main {
                     break;
                 case "VERBOSE":
                     flag_verbose = !flag_verbose;
+                    break;
+                case "DISPMODE":
+                    System.out.println("Not yet implemented!");
+
+                    Utils.printIf("Changing display mode...\n", flag_verbose || flag_debug);
+
+                    if(input_array.length != 2)
+                    {
+                        System.out.println("Error: incorrect number of arguments");
+                        break;
+                    }
+
+                    if(input_array[1].toUpperCase().equals("BINARY") || input_array[1].toUpperCase().equals("BIN"))
+                    {
+                        Utils.printIf("Setting display mode to binary...\n", flag_verbose);
+                        disp_mode = Dispmode.BINARY;
+                    }
+                    else if(input_array[1].toUpperCase().equals("HEXADECIMAL") || input_array[1].toUpperCase().equals("HEX"))
+                    {
+                        Utils.printIf("Setting display mode to hexadecimal...\n", flag_verbose);
+                        disp_mode = Dispmode.HEX;
+                    }
+                    else if(input_array[1].toUpperCase().equals("DECIMAL") || input_array[1].toUpperCase().equals("DEC"))
+                    {
+                        Utils.printIf("Setting display mode to decimal...\n", flag_verbose);
+                        disp_mode = Dispmode.DECIMAL;
+                    }
+                    else
+                    {
+                        System.out.printf("Error: unknown or unsupported base %s\n", input_array[1].toUpperCase());
+                    }
+
+                    Utils.printIf("Done.\n", flag_verbose);
                     break;
                 case "STEP":
                     Utils.printIf("Executing instruction at address " + controller.getMem().read(controller.getCPU().getRegister(Utils.PC)).value + "...\n", flag_debug | flag_verbose);
@@ -195,7 +243,15 @@ public class Main {
                     }
 
                     Utils.printIf("Setting memory address " + input_array[1] + " to command " + com + "...\n", flag_verbose);
-                    controller.getMem().writeCommand(Integer.parseInt(input_array[1]), com);
+                    try
+                    {
+                        controller.getMem().writeCommand(Integer.parseInt(input_array[1]), com);
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println("Error: see stack trace for details:");
+                        e.printStackTrace();
+                    }
                     Utils.printIf("Done\n", flag_verbose);
                     break;
                 case "CLRMEM":
@@ -228,10 +284,6 @@ public class Main {
                     System.out.printf("Unrecognized command %s\n", input_array[0]);
             }
         }
-
-//        System.out.printf("CPU contents: r2 = %d\n", controller.getCPU().getRegister(2));
-//
-//        displayMemory(controller, 32);
     }
 
     public static void displayMemory(Controller c, int mem_lines)
@@ -245,6 +297,7 @@ public class Main {
             {
                 System.out.printf("0x%3s|   %32s\n", Integer.toHexString(i).toUpperCase(), c.getMem().read(i).operation);
             }
+            //TODO: implement different base system display modes
             else
             {
                 System.out.printf("0x%3s| 0b%32s\n", Integer.toHexString(i).toUpperCase(), Integer.toBinaryString(c.getMem().read(i).value).toUpperCase());
