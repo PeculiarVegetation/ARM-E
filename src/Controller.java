@@ -161,47 +161,50 @@ public class Controller
                     }
                     else  //Data processing immediate shift
                     {
+                        Utils.printIf("rd = " + Integer.parseUnsignedInt(this.rd, 2) + "\n", debug_mode);
+                        
                         switch (this.current_opcode)
                         {
                             case AND:
                                 //Logical AND
                                 temp_result = AND(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case EOR:
                                 //Logical XOR
                                 temp_result = XOR(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case SUB:
                                 //Subtraction
                                 temp_result = SUB(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case RSB:
                                 //Reverse subtraction (arg2 - arg1)
                                 temp_result = RSB(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case ADD:
                                 //Addition
                                 temp_result = ADD(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                Utils.printIf("temp_result = " + temp_result + "\n", debug_mode);
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case ADC:
                                 //Addition with carry bit
                                 temp_result = ADC(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case SBC:
                                 //Subtraction with carry bit
                                 temp_result = SBC(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case RSC:
                                 //Reverse subtraction with carry bit
                                 temp_result = RSC(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case TST:
                                 //Update flags after logical AND
@@ -222,20 +225,20 @@ public class Controller
                             case ORR:
                                 //Logical (inclusive) OR
                                 temp_result = OR(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case MOV:
                                 //Move (arg2 only)
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(parsed_shift, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(parsed_shift, 2));
                                 break;
                             case BIC:
                                 //Bit clear (arg1 AND NOT arg2)
                                 temp_result = BIC(this.rn_value_string, parsed_shift);
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                 break;
                             case MVN:
                                 //Move not (NOT arg2 only)
-                                this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(NOT(parsed_shift), 2));
+                                this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(NOT(parsed_shift), 2));
                                 break;
                             default:
                                 throw new Exception("Error: unsupported or invalid opcode");
@@ -259,42 +262,42 @@ public class Controller
                                 case AND:
                                     //Logical AND
                                     temp_result = AND(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case EOR:
                                     //Logical XOR
                                     temp_result = XOR(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case SUB:
                                     //Subtraction
                                     temp_result = SUB(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case RSB:
                                     //Reverse subtraction (arg2 - arg1)
                                     temp_result = RSB(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case ADD:
                                     //Addition
                                     temp_result = ADD(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case ADC:
                                     //Addition with carry bit
                                     temp_result = ADC(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case SBC:
                                     //Subtraction with carry bit
                                     temp_result = SBC(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case RSC:
                                     //Reverse subtraction with carry bit
                                     temp_result = RSC(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case TST:
                                     //Update flags after logical AND
@@ -315,20 +318,20 @@ public class Controller
                                 case ORR:
                                     //Logical (inclusive) OR
                                     temp_result = OR(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case MOV:
                                     //Move (arg2 only)
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(parsed_shift, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(parsed_shift, 2));
                                     break;
                                 case BIC:
                                     //Bit clear (arg1 AND NOT arg2)
                                     temp_result = BIC(this.rn_value_string, parsed_shift);
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                                     break;
                                 case MVN:
                                     //Move not (NOT arg2 only)
-                                    this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(NOT(parsed_shift), 2));
+                                    this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(NOT(parsed_shift), 2));
                                     break;
                                 default:
                                     throw new Exception("Error: unsupported or invalid opcode");
@@ -366,42 +369,42 @@ public class Controller
                         case AND:
                             //Logical AND
                             temp_result = AND(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case EOR:
                             //Logical XOR
                             temp_result = XOR(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case SUB:
                             //Subtraction
                             temp_result = SUB(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case RSB:
                             //Reverse subtraction (arg2 - arg1)
                             temp_result = RSB(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case ADD:
                             //Addition
                             temp_result = ADD(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case ADC:
                             //Addition with carry bit
                             temp_result = ADC(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case SBC:
                             //Subtraction with carry bit
                             temp_result = SBC(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case RSC:
                             //Reverse subtraction with carry bit
                             temp_result = RSC(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case TST:
                             //Update flags after logical AND
@@ -422,20 +425,20 @@ public class Controller
                         case ORR:
                             //Logical (inclusive) OR
                             temp_result = OR(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case MOV:
                             //Move (arg2 only)
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(parsed_shift, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(parsed_shift, 2));
                             break;
                         case BIC:
                             //Bit clear (arg1 AND NOT arg2)
                             temp_result = BIC(this.rn_value_string, parsed_shift);
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(temp_result, 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(temp_result, 2));
                             break;
                         case MVN:
                             //Move not (NOT arg2 only)
-                            this.cpu.updateRegister(this.rd_value, Integer.parseUnsignedInt(NOT(parsed_shift), 2));
+                            this.cpu.updateRegister(Integer.parseUnsignedInt(this.rd, 2), Integer.parseUnsignedInt(NOT(parsed_shift), 2));
                             break;
                         default:
                             throw new Exception("Error: unsupported or invalid opcode");
@@ -1166,7 +1169,9 @@ public class Controller
         if (this.current_inst_type == Utils.Instruction.DATA_PROC)
         {
             int shift_amount = Integer.parseUnsignedInt(this.shift_amount, 2);
-            result_string = String.format("%032d", rm_value);
+            //result_string = String.format("%032d", rm_value);
+            result_string = Utils.ZERO_WORD.substring(Integer.toUnsignedString(rm_value, 2).length()) + Integer.toUnsignedString(rm_value, 2);
+            Utils.printIf("result_string = " + result_string + "\n", debug_mode);
             result_string_array = result_string.toCharArray();
             
             if (is_immediate_shift)
@@ -1567,6 +1572,8 @@ public class Controller
     
     private String ADD(String s1, String s2)
     {
+//        Utils.printIf("s1 = " + s1 + "\n", debug_mode);
+//        Utils.printIf("s2 = " + s2 + "\n", debug_mode);
         char temp[] = new char[32];
         boolean carry_bit = false;
         int bit_count;
@@ -1609,6 +1616,8 @@ public class Controller
                 carry_bit = false;
                 temp[i] = '0';
             }
+    
+            //Utils.printIf("Put " + temp[i] + " in position " + i + "\n", debug_mode);
         }
         
         return (String.valueOf(temp));

@@ -54,7 +54,7 @@ public class Memory {
     }
 
 
-    public boolean write(int addr, String value)
+    public boolean writeByte(int addr, String value)
     {
         //Need check for valid value length
         if(addr < 0 || addr >= this.size)
@@ -72,7 +72,7 @@ public class Memory {
         }
     }
     
-    public boolean writeByte(int addr, String value)
+    public boolean write(int addr, String value)
     {
         //Need check for valid value length
         if(addr < 0 || addr + 3 >= this.size)

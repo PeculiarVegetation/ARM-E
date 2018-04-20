@@ -7,6 +7,11 @@ public class Utils
     public static final int PC = 15;
     public static final int SP = 13;
     public static final int LR = 14;
+    
+    public static final String ZERO_WORD = "00000000000000000000000000000000";
+    public static final String ZERO_BYTE = "00000000";
+    public static final String ONE_WORD = "11111111111111111111111111111111";
+    public static final String ONE_BYTE = "11111111";
 
     public enum Operation
     {

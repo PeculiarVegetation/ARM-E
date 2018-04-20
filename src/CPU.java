@@ -96,27 +96,33 @@ public class CPU
         {
             case Utils.PC:
                 temp = Integer.toUnsignedString(this.program_counter, 2);
+                break;
             case Utils.SP:
                 temp = Integer.toUnsignedString(this.stack_pointer, 2);
+                break;
             case Utils.LR:
                 temp = Integer.toUnsignedString(this.link_register, 2);
+                break;
             default:  //any other register
                 temp = Integer.toUnsignedString(register, 2);
         }
         
-        //Write returned string to array
-        for(int i = 0; i < temp.length(); i++)
-        {
-            result_array[31 - i] = temp.charAt(31 - i);
-        }
+        temp = Utils.ZERO_WORD.substring(temp.length()) + temp;
+        return(temp);
         
-        //Fill in remaining chars
-        for(int i = 0; i < 32 - temp.length(); i++)
-        {
-            result_array[i] = '0';
-        }
-        
-        return(String.valueOf(result_array));
+//        //Write returned string to array
+//        for(int i = 0; i < temp.length(); i++)
+//        {
+//            result_array[31 - i] = temp.charAt(temp.length() - i - 1);
+//        }
+//
+//        //Fill in remaining chars
+//        for(int i = 0; i < 32 - temp.length(); i++)
+//        {
+//            result_array[i] = '0';
+//        }
+//
+//        return(String.valueOf(result_array));
     }
     
     public void incrementPC()
