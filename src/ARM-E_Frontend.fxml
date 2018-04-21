@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane fx:id="Emulator_Window" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="Emulator_Window" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIController">
    <children>
       <ToolBar fx:id="Menu_Bar" prefHeight="28.0" prefWidth="766.0">
          <items>
@@ -106,7 +106,7 @@
             <Label fx:id="RegValLabel" alignment="CENTER" prefHeight="46.0" prefWidth="330.0" text="REGISTER VALUE" underline="true" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-    <Button layoutX="594.0" layoutY="537.0" mnemonicParsing="false" text="Run" />
+    <Button layoutX="594.0" layoutY="537.0" mnemonicParsing="false" text="Run" onAction="#handleRunButtonAction"/>
       <Label fx:id="CPSR" layoutX="14.0" layoutY="542.0" prefHeight="19.0" prefWidth="41.0" text="CPSR" />
       <TextField fx:id="CPSR_Value" editable="false" layoutX="58.0" layoutY="537.0" />
       <Label fx:id="OP_Code_Register" layoutX="216.0" layoutY="542.0" text="OP Code Register" />
