@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.HashMap;
 
-public class ARM-EAssembler
+public class ARM_EAssembler
     {
 
     public static void main(String[] args)

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<Pane fx:id="Emulator_Window" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIController">
+   <children>
+      <ToolBar fx:id="Menu_Bar" prefHeight="28.0" prefWidth="766.0">
+         <items>
+            <MenuButton fx:id="File_Menu" mnemonicParsing="false" text="Files">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <MenuButton fx:id="Edit_Menu" mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <MenuButton fx:id="View_Menu" mnemonicParsing="false" text="View">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <MenuButton fx:id="Tools_Menu" mnemonicParsing="false" text="Tools">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <MenuButton fx:id="Help_Menu" mnemonicParsing="false" text="Help">
+              <items>
+                <MenuItem mnemonicParsing="false" text="About" />
+              </items>
+            </MenuButton>
+         </items>
+      </ToolBar>
+      <TableView fx:id="Input_Table" editable="true" layoutX="462.0" layoutY="41.0" prefHeight="490.0" prefWidth="304.0">
+        <columns>
+          <TableColumn fx:id="Memory_Locations" editable="false" prefWidth="133.0" sortable="false" text="Memory Location" />
+          <TableColumn fx:id="ARM_Commands" prefWidth="170.0" sortable="false" text="ARM Command" />
+        </columns>
+      </TableView>
+      <GridPane fx:id="Register_Matrix" layoutY="42.0" prefHeight="490.0" prefWidth="463.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="223.0" minWidth="10.0" prefWidth="133.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="330.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="RegVal" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="REGISTER" underline="true" />
+            <Label fx:id="Reg1" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 1" GridPane.rowIndex="1" />
+            <Label fx:id="Reg2" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 2" GridPane.rowIndex="2" />
+            <Label fx:id="Reg3" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 3" GridPane.rowIndex="3" />
+            <Label fx:id="Reg4" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 4" GridPane.rowIndex="4" />
+            <Label fx:id="Reg5" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 5" GridPane.rowIndex="5" />
+            <Label fx:id="Reg6" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 6" GridPane.rowIndex="6" />
+            <Label fx:id="Reg7" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 7" GridPane.rowIndex="7" />
+            <Label fx:id="Reg8" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 8" GridPane.rowIndex="8" />
+            <Label fx:id="Reg9" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 9" GridPane.rowIndex="9" />
+            <Label fx:id="Reg10" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 10" GridPane.rowIndex="10" />
+            <Label fx:id="Reg11" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 11" GridPane.rowIndex="11" />
+            <Label fx:id="Reg12" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 12" GridPane.rowIndex="12" />
+            <Label fx:id="Reg13" alignment="CENTER" prefHeight="58.0" prefWidth="133.0" text="Register 13" GridPane.rowIndex="13" />
+            <TextField fx:id="Val1" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="Val2" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="Val3" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="Val4" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="Val5" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="Val6" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="Val7" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="Val8" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextField fx:id="Val9" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="Val10" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <TextField fx:id="Val11" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <TextField fx:id="Val12" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <TextField fx:id="Val13" editable="false" prefHeight="54.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+            <Label fx:id="RegValLabel" alignment="CENTER" prefHeight="46.0" prefWidth="330.0" text="REGISTER VALUE" underline="true" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+    <Button layoutX="594.0" layoutY="537.0" mnemonicParsing="false" text="Run" onAction="#handleRunButtonAction"/>
+      <Label fx:id="CPSR" layoutX="14.0" layoutY="542.0" prefHeight="19.0" prefWidth="41.0" text="CPSR" />
+      <TextField fx:id="CPSR_Value" editable="false" layoutX="58.0" layoutY="537.0" />
+      <Label fx:id="OP_Code_Register" layoutX="216.0" layoutY="542.0" text="OP Code Register" />
+      <TextField fx:id="OP_Code_Register_Value" editable="false" layoutX="318.0" layoutY="537.0" />
+   </children>
+</Pane>
